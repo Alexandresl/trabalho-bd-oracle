@@ -1,0 +1,56 @@
+SELECT nome 
+from PRODUTO 
+ORDER BY NOME ASC;
+
+SELECT nome, quantidade_estoque, preco 
+from PRODUTO 
+WHERE quantidade_estoque > 50 
+OR (preco < 10);
+
+SELECT pedido.id_pedido, pedido.data_pedido, cliente.nome 
+from pedido 
+INNER JOIN cliente 
+ON pedido.id_cliente = cliente.id_cliente;
+
+SELECT pedido_produto.id_pedido, pedido_produto.id_produto, produto.nome, produto.preco 
+FROM pedido_produto 
+INNER JOIN produto 
+ON pedido_produto.id_produto = produto.id_produto 
+ORDER BY PRODUTO.ID_PRODUTO ASC;
+
+SELECT PRODUTO.NOME 
+FROM PRODUTO 
+inner join PEDIDO_PRODUTO 
+ON PRODUTO.ID_PRODUTO = PEDIDO_PRODUTO.ID_PRODUTO 
+WHERE PEDIDO_PRODUTO.QUANTIDADE > 10;
+
+SELECT PEDIDO.ID_PEDIDO, PEDIDO.DATA_PEDIDO, CLIENTE.NOME
+FROM PEDIDO
+INNER JOIN CLIENTE ON PEDIDO.ID_CLIENTE = CLIENTE.ID_CLIENTE
+INNER JOIN PEDIDO_PRODUTO ON PEDIDO.ID_PEDIDO = PEDIDO_PRODUTO.ID_PEDIDO
+WHERE PEDIDO_PRODUTO.ID_PRODUTO = 1;
+
+/*Apresentar o código do pedido, a data, o nome do cliente para os pedidos do produto mesa.*/
+
+SELECT PEDIDO.ID_PEDIDO, PEDIDO.DATA_PEDIDO, CLIENTE.NOME
+FROM PEDIDO
+INNER JOIN CLIENTE ON PEDIDO.ID_CLIENTE = CLIENTE.ID_CLIENTE
+INNER JOIN PEDIDO_PRODUTO ON PEDIDO.ID_PEDIDO = PEDIDO_PRODUTO.ID_PEDIDO
+INNER JOIN PRODUTO ON PEDIDO_PRODUTO.ID_PRODUTO = PRODUTO.ID_PRODUTO
+WHERE PRODUTO.NOME LIKE 'Mesa';
+
+/*8. Apresentar o código do pedido, o nome do cliente e a data do pedido para os pedidos que ainda não foram entregues.*/
+SELECT PEDIDO.ID_PEDIDO, PEDIDO.DATA_PEDIDO, CLIENTE.NOME
+FROM PEDIDO
+INNER JOIN CLIENTE ON PEDIDO.ID_CLIENTE = CLIENTE.ID_CLIENTE
+WHERE PEDIDO.DATA_ENTREGA is null;
+
+/*9. Apresentar o código do pedido, nome do cliente, nome do produto, total produto (quantidade*preço do produto). 
+Ordenar pelo código do pedido e pelo nome do produto.*/
+
+SELECT PEDIDO.ID_PEDIDO, CLIENTE.NOME, PRODUTO.NOME, PEDIDO_PRODUTO.PRECO_VENDA
+FROM PEDIDO
+INNER JOIN CLIENTE ON PEDIDO.ID_CLIENTE = CLIENTE.ID_CLIENTE
+INNER JOIN PEDIDO_PRODUTO ON PEDIDO.ID_PEDIDO = PEDIDO_PRODUTO.ID_PEDIDO
+INNER JOIN PRODUTO ON PEDIDO_PRODUTO.ID_PRODUTO = PRODUTO.ID_PRODUTO
+ORDER BY PEDIDO.ID_PEDIDO, PRODUTO.NOME;

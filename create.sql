@@ -1,0 +1,12 @@
+CREATE TABLE cliente (id_cliente NUMBER CONSTRAINT PK_CLIENTE PRIMARY KEY, nome VARCHAR2(20), endereco VARCHAR2(20), telefone VARCHAR2(20));
+CREATE SEQUENCE cliente_sequence START WITH 1;
+CREATE TABLE produto (id_produto NUMBER CONSTRAINT PK_PRODUTO PRIMARY KEY, nome VARCHAR2(20), preco NUMBER, quantidade_estoque NUMBER);
+CREATE SEQUENCE produto_sequence START WITH 1;
+CREATE TABLE pedido (id_pedido NUMBER CONSTRAINT PK_PEDIDO PRIMARY KEY, id_cliente NUMBER, data_pedido DATE, data_entrega DATE);
+CREATE SEQUENCE pedido_sequence START WITH 1;
+CREATE TABLE pedido_produto (id_pedido NUMBER, id_produto NUMBER, preco_venda Number, quantidade NUMBER, CONSTRAINT PK_PEDIDO_PRODUTO PRIMARY KEY (id_pedido, id_produto));
+
+ALTER TABLE pedido ADD CONSTRAINT FK_PEDIDO_ID_CLIENTE FOREIGN KEY (id_cliente) REFERENCES cliente;
+ALTER TABLE pedido_produto ADD CONSTRAINT FK_PEDIDO_ID_PEDIDO FOREIGN KEY (id_pedido) REFERENCES pedido;
+ALTER TABLE pedido_produto ADD CONSTRAINT FK_PEDIDO_ID_PRODUTO FOREIGN KEY (id_produto) REFERENCES produto;
+
